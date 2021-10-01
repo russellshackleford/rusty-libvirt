@@ -1,0 +1,7 @@
+fixtures:
+ forge_modules:
+   # stdlib:
+   #   repo: 'puppetlabs-stdlib'
+   #   ref: '4.25.1'
+
+# vim: set tw=80 ts=2 sw=2 sts=2 et:

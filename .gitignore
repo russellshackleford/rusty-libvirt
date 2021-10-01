@@ -1,0 +1,7 @@
+*.sw[o-p]
+*~
+/.bundle/
+/.vendor/
+/.yardoc/
+/spec/fixtures/
+/vendor/

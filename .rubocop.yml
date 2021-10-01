@@ -1,0 +1,30 @@
+require:
+  - rubocop-rspec
+
+AllCops:
+  Exclude:
+    - 'modules/**/*'
+    - 'spec/fixtures/**/*'
+    - 'vendor/**/*'
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/classes/**/*.rb'
+    - 'spec/defines/**/*.rb'
+
+RSpec/DescribeClass:
+  Description: This cop does not account for rspec-puppet, and beaker-rspec usage.
+  Enabled: False
+
+RSpec/ExampleLength:
+  Description: Forcing short examples leads to the creation of one-time use let() helpers
+  Enabled: False
+
+RSpec/NestedGroups:
+  Description: Nested groups can lead to cleaner tests with less duplication
+  Max: 10
+
+Style/TrailingCommaInHashLiteral:
+  EnforcedStyleForMultiline: consistent_comma
+
+# vim: set tw=80 ts=2 sw=2 sts=2 et:

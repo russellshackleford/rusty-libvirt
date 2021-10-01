@@ -1,0 +1,4 @@
+--fail-on-warnings
+--with-filename
+--80chars-check
+--relative

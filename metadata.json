@@ -1,0 +1,25 @@
+{
+  "name": "oz-libvirt",
+  "version": "0.1.0",
+  "author": "jc",
+  "summary": "Installs/configures libvirtd and guests",
+  "license": "proprietary",
+  "source": "https://bitbucket.org/criticalmedianyc/oz-libvirt/",
+  "dependencies": [
+  ],
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "CentOS",
+      "operatingsystemrelease": [
+        "6",
+        "8"
+      ]
+    }
+  ],
+  "requirements": [
+    {
+      "name": "puppet",
+      "version_requirement": ">= 4.10.0 < 7.0.0"
+    }
+  ]
+}

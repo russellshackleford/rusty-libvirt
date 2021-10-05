@@ -12,6 +12,7 @@
 
 #### Private Classes
 
+* `libvirt::config`
 * `libvirt::install`
 * `libvirt::params`
 
@@ -72,4 +73,31 @@ Data type: `Optional[String[1]]`
 The name of the virt-install package. Default value is OS-dependent.
 
 Default value: `$libvirt::params::virt_install_pkg`
+
+##### `manage_group`
+
+Data type: `Boolean`
+
+Whether to create the `socket_group` group. This only ensures the group
+exists. It does not change the members of the group. It _will_ change the
+GID to match `socket_gid` if `socket_gid` is set to a value.
+
+Default value: ``false``
+
+##### `socket_group`
+
+Data type: `String[1]`
+
+The group that allows access via polkit regardless if `manage_group` is
+true or false
+
+Default value: `'libvirt'`
+
+##### `socket_gid`
+
+Data type: `Optional[Integer]`
+
+The `socket_group`'s GID
+
+Default value: ``undef``
 

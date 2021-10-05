@@ -14,7 +14,9 @@ describe 'libvirt' do
         end
         it do
           is_expected.to contain_class('libvirt::config')
+            .that_comes_before('Class[libvirt::service]')
         end
+        it { is_expected.to contain_class('libvirt::service') }
       end
     end
   end

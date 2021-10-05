@@ -15,6 +15,7 @@
 * `libvirt::config`
 * `libvirt::install`
 * `libvirt::params`
+* `libvirt::service`
 
 ## Classes
 
@@ -57,6 +58,14 @@ Data type: `String[1]`
 The name of the libvirt package
 
 Default value: `'libvirt'`
+
+##### `libvirt_service`
+
+Data type: `String[1]`
+
+The name of the libvirt service
+
+Default value: `'libvirtd'`
 
 ##### `libvirt_guests`
 

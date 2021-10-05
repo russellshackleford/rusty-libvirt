@@ -26,6 +26,7 @@ class libvirt::config {
     ensure  => present,
     content => epp("libvirt/libvirtd${filesuf}.conf.epp"),
     require => Class['libvirt::install'],
+    notify  => Service['libvirt'],
   }
 
   # This will be read as needed by the init script. Don't notify the service.

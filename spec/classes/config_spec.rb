@@ -29,6 +29,7 @@ describe 'libvirt::config' do
           is_expected.to contain_file('/etc/libvirt/libvirtd.conf')
             .with_ensure('present')
             .with_require('Class[Libvirt::Install]')
+            .with_notify('Service[libvirt]')
         end
         # These should match the completely unaltered files shipped with package
         it 'is expected that the base libvirtd.conf template will match' do

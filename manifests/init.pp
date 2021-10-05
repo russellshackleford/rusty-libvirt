@@ -15,6 +15,9 @@
 # @param libvirt_pkg
 #   The name of the libvirt package
 #
+# @param libvirt_service
+#   The name of the libvirt service
+#
 # @param libvirt_guests
 #   Whether to enable the libvirt-guests service
 #
@@ -49,6 +52,7 @@ class libvirt(
   Boolean $kvm = true,
   String[1] $kvm_pkg = 'qemu-kvm',
   String[1] $libvirt_pkg = 'libvirt',
+  String[1] $libvirt_service = 'libvirtd',
   Boolean $libvirt_guests = false,
   String[1] $libvirt_guests_service = 'libvirt-guests',
   Optional[Enum['start', 'ignore']] $libvirt_guests_onboot = undef,
@@ -62,4 +66,5 @@ class libvirt(
 
   class { 'libvirt::install': }
   -> class { 'libvirt::config': }
+  -> class { 'libvirt::service': }
 }

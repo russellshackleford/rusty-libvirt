@@ -27,4 +27,11 @@ class libvirt::config {
     content => epp("libvirt/libvirtd${filesuf}.conf.epp"),
     require => Class['libvirt::install'],
   }
+
+  # This will be read as needed by the init script. Don't notify the service.
+  file { '/etc/sysconfig/libvirt-guests':
+    ensure  => present,
+    content => epp("libvirt/libvirt-guests${filesuf}.epp"),
+    require => Class['libvirt::install'],
+  }
 }

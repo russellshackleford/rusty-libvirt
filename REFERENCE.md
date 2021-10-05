@@ -58,6 +58,38 @@ The name of the libvirt package
 
 Default value: `'libvirt'`
 
+##### `libvirt_guests`
+
+Data type: `Boolean`
+
+Whether to enable the libvirt-guests service
+
+Default value: ``false``
+
+##### `libvirt_guests_service`
+
+Data type: `String[1]`
+
+The name of the libvirt-guests service
+
+Default value: `'libvirt-guests'`
+
+##### `libvirt_guests_onboot`
+
+Data type: `Optional[Enum['start', 'ignore']]`
+
+Determines which guests are started on host boot
+
+Default value: ``undef``
+
+##### `libvirt_guests_onshutdown`
+
+Data type: `Optional[Enum['suspend', 'shutdown']]`
+
+Determines if guests are shutdown or suspended on host shutdown
+
+Default value: ``undef``
+
 ##### `virt_install`
 
 Data type: `Boolean`

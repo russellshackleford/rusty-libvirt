@@ -9,15 +9,21 @@ describe 'libvirt::config' do
           {
             libvirtd: '4d7c27ca0f2d42940ad541a61764f5fd6ad0bfa0',
             libvirt_guests: '1aaf96d7de86d8c0dbed8125096bb7a82675fb63',
+            polkit: '9059654016cdb794aad183c59dc6585871ed94b6',
           }
+        end
+        let(:pol_file) do
+          '/etc/polkit-1/localauthority/50-local.d/50-libvirtd.pkla'
         end
       when '8'
         let(:sum) do
           {
             libvirtd: '4f1c2ef1f4032b5a6fdc659d3b2d449c5793aa12',
             libvirt_guests: 'a766ef2673b38ccaeb7999b046e205ae0026c54e',
+            polkit: 'c5a1766d440b2490627004559d532b23b5346186',
           }
         end
+        let(:pol_file) { '/etc/polkit-1/rules.d/50-libvirt.rules' }
       end
       let(:pre_condition) { 'include libvirt' }
       let(:facts) { os_facts }
@@ -49,6 +55,9 @@ describe 'libvirt::config' do
           real = Digest::SHA1.hexdigest(f[:content])
           expect(real).to eq(sum[:libvirt_guests])
         end
+
+        it { is_expected.not_to contain_file(pol_file) }
+      end
 
       context 'when managing the default group' do
         let(:pre_condition) do
@@ -140,6 +149,45 @@ describe 'libvirt::config' do
           is_expected.to compile.and_raise_error(
             /'libvirt_guests_onshutdown' expects a match for Enum/
           )
+        end
+      end
+
+      context 'when polkit is managed' do
+        let(:pre_condition) do
+          super().replace("class { 'libvirt': manage_polkit => true }")
+        end
+
+        it do
+          is_expected.to contain_file(pol_file)
+            .with_ensure('present')
+            .with_require('Class[Libvirt::Install]')
+        end
+
+        it 'is expected that the default polkit file will match' do
+          f = catalogue.resource('file', pol_file)
+          real = Digest::SHA1.hexdigest(f[:content])
+          expect(real).to eq(sum[:polkit])
+        end
+
+        context 'when using a non-default group' do
+          case os_facts[:os]['release']['major']
+          when '6'
+            let(:match) { /Identity=unix-group:nondefault/ }
+          when '8'
+            let(:match) { /subject.isInGroup\("nondefault"\)/ }
+          end
+          let(:pre_condition) do
+            super().replace(
+              "class { 'libvirt':
+                 manage_polkit => true,
+                 socket_group => 'nondefault' }"
+            )
+          end
+
+          it do
+            is_expected.to contain_file(pol_file)
+              .with_content(match)
+          end
         end
       end
     end

@@ -130,7 +130,7 @@ Default value: ``false``
 Data type: `String[1]`
 
 The group that allows access via polkit regardless if `manage_group` is
-true or false
+true or false. Only meaningful if `manage_polkit` is true.
 
 Default value: `'libvirt'`
 
@@ -141,4 +141,12 @@ Data type: `Optional[Integer]`
 The `socket_group`'s GID
 
 Default value: ``undef``
+
+##### `manage_polkit`
+
+Data type: `Boolean`
+
+Whether to manage the policykit rule for libvirt.
+
+Default value: ``false``
 

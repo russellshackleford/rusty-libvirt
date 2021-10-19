@@ -1,0 +1,6 @@
+[Libvirt Socket Access]
+Identity=unix-group:<%= $libvirt::socket_group %>
+Action=org.libvirt.unix.manage
+ResultAny=yes
+ResultInactive=yes
+ResultActive=yes

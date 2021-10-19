@@ -12,9 +12,11 @@ class libvirt::config {
     case $facts['os']['release']['major'] {
       '6': {
         $filesuf = '-el6'
+        $pol_file = '/etc/polkit-1/localauthority/50-local.d/50-libvirtd.pkla'
       }
       '8': {
         $filesuf = '-el8'
+        $pol_file = '/etc/polkit-1/rules.d/50-libvirt.rules'
       }
       default: { fail('This OS is not yet supported') }
     }
@@ -34,5 +36,14 @@ class libvirt::config {
     ensure  => present,
     content => epp("libvirt/libvirt-guests${filesuf}.epp"),
     require => Class['libvirt::install'],
+  }
+
+  # This file is read as needed, not at startup. Don't notify the service.
+  if $libvirt::manage_polkit {
+    file { $pol_file:
+      ensure  => present,
+      content => epp("libvirt/polkit${filesuf}.epp"),
+      require => Class['libvirt::install'],
+    }
   }
 }

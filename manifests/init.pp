@@ -43,10 +43,13 @@
 #
 # @param socket_group
 #   The group that allows access via polkit regardless if `manage_group` is
-#   true or false
+#   true or false. Only meaningful if `manage_polkit` is true.
 #
 # @param socket_gid
 #   The `socket_group`'s GID
+#
+# @param manage_polkit
+#   Whether to manage the policykit rule for libvirt.
 #
 class libvirt(
   Boolean $kvm = true,
@@ -62,6 +65,7 @@ class libvirt(
   Boolean $manage_group = false,
   String[1] $socket_group = 'libvirt',
   Optional[Integer] $socket_gid = undef,
+  Boolean $manage_polkit = false,
 ) inherits libvirt::params {
 
   class { 'libvirt::install': }

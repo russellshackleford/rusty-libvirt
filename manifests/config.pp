@@ -24,6 +24,12 @@ class libvirt::config {
     fail('This OS is not yet supported')
   }
 
+  file { '/etc/profile.d/libvirt-uri.sh':
+    ensure => present,
+    mode   => '0644',
+    source => 'puppet:///modules/libvirt/libvirt-uri.sh',
+  }
+
   file { '/etc/libvirt/libvirtd.conf':
     ensure  => present,
     content => epp("libvirt/libvirtd${filesuf}.conf.epp"),

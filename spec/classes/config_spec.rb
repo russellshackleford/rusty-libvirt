@@ -32,6 +32,19 @@ describe 'libvirt::config' do
         it { is_expected.to compile.with_all_deps }
         it { is_expected.not_to contain_group('libvirt') }
         it do
+          is_expected.to contain_file('/etc/profile.d/libvirt-uri.sh')
+            .with_ensure('present')
+            .with_mode('0644')
+            .with_source('puppet:///modules/libvirt/libvirt-uri.sh')
+        end
+
+        it 'is expected that libvirt-uri.sh will match sum' do
+          f = File.read('files/libvirt-uri.sh')
+          sum = Digest::SHA1.hexdigest(f)
+          expect(sum).to eq('1b666261f53abb09e19ae598b732a957aba371ea')
+        end
+
+        it do
           is_expected.to contain_file('/etc/libvirt/libvirtd.conf')
             .with_ensure('present')
             .with_require('Class[Libvirt::Install]')

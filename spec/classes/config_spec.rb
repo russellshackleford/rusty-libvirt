@@ -15,6 +15,7 @@ describe 'libvirt::config' do
         let(:pol_file) do
           '/etc/polkit-1/localauthority/50-local.d/50-libvirtd.pkla'
         end
+        let(:svc) { 'Service[libvirtd]' }
       when '8'
         let(:sum) do
           {
@@ -24,6 +25,7 @@ describe 'libvirt::config' do
           }
         end
         let(:pol_file) { '/etc/polkit-1/rules.d/50-libvirt.rules' }
+        let(:svc) { nil }
       end
       let(:pre_condition) { 'include libvirt' }
       let(:facts) { os_facts }
@@ -48,7 +50,7 @@ describe 'libvirt::config' do
           is_expected.to contain_file('/etc/libvirt/libvirtd.conf')
             .with_ensure('present')
             .with_require('Class[Libvirt::Install]')
-            .with_notify('Service[libvirt]')
+            .with_notify(svc)
         end
         # These should match the completely unaltered files shipped with package
         it 'is expected that the base libvirtd.conf template will match' do

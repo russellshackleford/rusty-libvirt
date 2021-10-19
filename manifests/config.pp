@@ -13,10 +13,14 @@ class libvirt::config {
       '6': {
         $filesuf = '-el6'
         $pol_file = '/etc/polkit-1/localauthority/50-local.d/50-libvirtd.pkla'
+        $service = Service[$libvirt::libvirt_service]
       }
       '8': {
         $filesuf = '-el8'
         $pol_file = '/etc/polkit-1/rules.d/50-libvirt.rules'
+        # The three systemd "services" are just sockets. They don't need to be
+        # restarted. Most of libvirtd.conf is ignored when using systemd anyway.
+        $service = undef
       }
       default: { fail('This OS is not yet supported') }
     }
@@ -34,7 +38,7 @@ class libvirt::config {
     ensure  => present,
     content => epp("libvirt/libvirtd${filesuf}.conf.epp"),
     require => Class['libvirt::install'],
-    notify  => Service['libvirt'],
+    notify  => $service,
   }
 
   # This will be read as needed by the init script. Don't notify the service.

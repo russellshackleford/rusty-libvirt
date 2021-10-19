@@ -16,7 +16,7 @@
 #   The name of the libvirt package
 #
 # @param libvirt_service
-#   The name of the libvirt service
+#   The name of the libvirt service. Not used on systemd hosts.
 #
 # @param libvirt_guests
 #   Whether to enable the libvirt-guests service
@@ -56,7 +56,7 @@ class libvirt(
   String[1] $kvm_pkg = 'qemu-kvm',
   String[1] $libvirt_pkg = 'libvirt',
   String[1] $libvirt_service = 'libvirtd',
-  Boolean $libvirt_guests = false,
+  Boolean $libvirt_guests = true,
   String[1] $libvirt_guests_service = 'libvirt-guests',
   Optional[Enum['start', 'ignore']] $libvirt_guests_onboot = undef,
   Optional[Enum['suspend', 'shutdown']] $libvirt_guests_onshutdown = undef,

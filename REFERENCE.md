@@ -63,7 +63,7 @@ Default value: `'libvirt'`
 
 Data type: `String[1]`
 
-The name of the libvirt service
+The name of the libvirt service. Not used on systemd hosts.
 
 Default value: `'libvirtd'`
 
@@ -73,7 +73,7 @@ Data type: `Boolean`
 
 Whether to enable the libvirt-guests service
 
-Default value: ``false``
+Default value: ``true``
 
 ##### `libvirt_guests_service`
 
